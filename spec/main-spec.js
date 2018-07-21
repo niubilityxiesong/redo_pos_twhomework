@@ -1,7 +1,8 @@
 const printInventory = require('../main/main');
 const datbase = require('../main/datbase');
 const Item = require('../main/item');
-const Cart = require('../main/cart')
+const Cart = require('../main/cart');
+const Pos = require('../main/pos');
 
 describe('pos', function () {
     var inputs;
@@ -37,11 +38,23 @@ describe('pos', function () {
 
     it('should get cart items', function () {
         Item.loadAllDiscountItems(itemInfo, datbase.loadPromotions());
-        let result = Cart.initCartItems(inputs);
+        let result = Cart.initCartItems(inputs, itemInfo);
 
         expect(result[0].count).toBe(5);
+        expect(result[0].name).toBe("雪碧");
+        expect(result[0].price).toBe(3);
+        expect(result[0].discount).toBe(1);
         expect(result[1].count).toBe(2);
+        expect(result[1].discount).toBe(-1);
         expect(result[2].count).toBe(3);
+    });
+
+    it('should get every items price', function () {
+        Item.loadAllDiscountItems(itemInfo, datbase.loadPromotions());
+        let cartInfo = Cart.initCartItems(inputs, itemInfo);
+        let result = Pos.calEveryItemmoney(cartInfo);
+        
+        expect(result[0].sumMoney).toBe(12);
     });
 
     it('should print correct text', function () {
