@@ -1,5 +1,15 @@
-module.exports = function printInventory(inputs) {
-    console.log("Debug Info");
+const datbase = require('./datbase');
+const Item = require('./item');
 
-    return 'Hello World!';
+module.exports = function printInventory(inputs) {
+    let ItemInfo = [];
+    
+    datbase.loadAllItems().forEach(elm => {
+        ItemInfo.push(new Item(elm));
+    });
+    ItemInfo.forEach(elm => {
+        elm.addDiscountItems(datbase.loadPromotions());
+    });
+
+    
 };

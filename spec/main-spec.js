@@ -1,4 +1,7 @@
 const printInventory = require('../main/main');
+const datbase = require('../main/datbase');
+const Item = require('../main/item');
+const Cart = require('../main/cart');
 
 describe('pos', function () {
     var inputs;
@@ -15,6 +18,37 @@ describe('pos', function () {
             'ITEM000005',
             'ITEM000005'
         ];
+
+        ItemInfo = [];
+        datbase.loadAllItems().forEach(elm => {
+        ItemInfo.push(new Item(elm));
+    });
+
+    });
+
+    it('should get items information', function () {
+        let expected = "可口可乐";
+        expect(ItemInfo[0].name).toBe(expected);
+    });
+
+    it('should get items discount information', function () {
+        let expected = 1;
+        ItemInfo.forEach(elm => {
+            elm.addDiscountItems(datbase.loadPromotions());
+        });
+        expect(ItemInfo[0].discount).toBe(expected);
+    });
+
+    it('should get cart items', function () {
+        let expected = 1;
+        ItemInfo.forEach(elm => {
+            elm.addDiscountItems(datbase.loadPromotions());
+        });
+
+        let cartInfo = [];
+        
+
+        expect(ItemInfo[0].discount).toBe(expected);
     });
 
     it('should print correct text', function () {
