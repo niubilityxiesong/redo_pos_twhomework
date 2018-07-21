@@ -1,7 +1,7 @@
 const printInventory = require('../main/main');
 const datbase = require('../main/datbase');
 const Item = require('../main/item');
-const Cart = require('../main/cart');
+const Cart = require('../main/cart')
 
 describe('pos', function () {
     var inputs;
@@ -19,36 +19,29 @@ describe('pos', function () {
             'ITEM000005'
         ];
 
-        ItemInfo = [];
-        datbase.loadAllItems().forEach(elm => {
-        ItemInfo.push(new Item(elm));
-    });
+        itemInfo = Item.initAllData(datbase.loadAllItems());
 
     });
 
     it('should get items information', function () {
-        let expected = "可口可乐";
-        expect(ItemInfo[0].name).toBe(expected);
+        let expected = "雪碧";
+        expect(itemInfo[1].name).toBe(expected);
     });
 
     it('should get items discount information', function () {
         let expected = 1;
-        ItemInfo.forEach(elm => {
-            elm.addDiscountItems(datbase.loadPromotions());
-        });
-        expect(ItemInfo[0].discount).toBe(expected);
+        Item.loadAllDiscountItems(itemInfo, datbase.loadPromotions());
+
+        expect(itemInfo[0].discount).toBe(expected);
     });
 
     it('should get cart items', function () {
-        let expected = 1;
-        ItemInfo.forEach(elm => {
-            elm.addDiscountItems(datbase.loadPromotions());
-        });
+        Item.loadAllDiscountItems(itemInfo, datbase.loadPromotions());
+        let result = Cart.initCartItems(inputs);
 
-        let cartInfo = [];
-        
-
-        expect(ItemInfo[0].discount).toBe(expected);
+        expect(result[0].count).toBe(5);
+        expect(result[1].count).toBe(2);
+        expect(result[2].count).toBe(3);
     });
 
     it('should print correct text', function () {

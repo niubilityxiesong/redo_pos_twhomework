@@ -7,10 +7,21 @@ module.exports = class Item{
         this.discount = -1;
     }
 
-    addDiscountItems(discount){
+    static initAllData(loadAllItems){
+        let itemInfo = [];
+
+        loadAllItems.forEach(elm => {
+            itemInfo.push(new Item(elm));
+        });
+        return itemInfo;
+    }
+
+    static loadAllDiscountItems(itemInfo, discount){
         let discountItem = discount[0]["barcodes"];
-        if(discountItem.indexOf(this.barcode) != -1){
-            this.discount = 1;
-        }
+        itemInfo.forEach(elm => {
+            if(discountItem.indexOf(elm.barcode) != -1){
+                elm.discount = 1;
+            }
+        });
     }
 }
