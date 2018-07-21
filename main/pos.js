@@ -11,25 +11,25 @@ module.exports = class Pos{
         this.economy = 0;
     }
 
-    static calEveryItemmoney(cartInfo){
-        let EveryItemmoney = [];
+    static calEveryItemMoney(cartInfo){
+        let EveryItemMoney = [];
         for(let i = 0; i < cartInfo.length; i++){
-            EveryItemmoney.push(new Pos(cartInfo[i]));
+            EveryItemMoney.push(new Pos(cartInfo[i]));
             if(cartInfo[i].discount === -1){
-                EveryItemmoney[EveryItemmoney.length - 1].sumMoney
+                EveryItemMoney[EveryItemMoney.length - 1].sumMoney
                 = cartInfo[i].price * cartInfo[i].count; 
             }
             else{
                 let judgeDiscount = Math.floor(cartInfo[i].count / 3);
-                EveryItemmoney[EveryItemmoney.length - 1].sumMoney
+                EveryItemMoney[EveryItemMoney.length - 1].sumMoney
                 = cartInfo[i].price * (cartInfo[i].count - judgeDiscount); 
-                EveryItemmoney[EveryItemmoney.length - 1].discountNum += judgeDiscount;
-                EveryItemmoney[EveryItemmoney.length - 1].economy 
+                EveryItemMoney[EveryItemMoney.length - 1].discountNum += judgeDiscount;
+                EveryItemMoney[EveryItemMoney.length - 1].economy 
                 = cartInfo[i].price * judgeDiscount;
             }
         }
 
-        return EveryItemmoney;
+        return EveryItemMoney;
     }
     
     static printList(shopping){

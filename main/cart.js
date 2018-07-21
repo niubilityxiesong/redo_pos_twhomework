@@ -32,7 +32,7 @@ module.exports = class Cart {
             let nameAndCount = input.split('-');
             cartIntems[cartIntems.length - 1].count
                 += parseInt(nameAndCount[1]) - 1;
-                input = nameAndCount[0];
+            input = nameAndCount[0];
         }
         itemsInfo.forEach(element => {
             if (element.barcode === input) {

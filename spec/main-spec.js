@@ -52,7 +52,7 @@ describe('pos', function () {
     it('should get every items price', function () {
         Item.loadAllDiscountItems(itemInfo, datbase.loadPromotions());
         let cartInfo = Cart.initCartItems(inputs, itemInfo);
-        let result = Pos.calEveryItemmoney(cartInfo);
+        let result = Pos.calEveryItemMoney(cartInfo);
         
         expect(result[0].sumMoney).toBe(12);
     });
